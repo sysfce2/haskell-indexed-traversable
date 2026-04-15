@@ -1,7 +1,6 @@
 cabal-version:      1.12
 name:               indexed-traversable-instances
-version:            0.1.2
-x-revision:         1
+version:            0.1.2.1
 build-type:         Simple
 license:            BSD2
 license-file:       LICENSE
