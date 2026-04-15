@@ -13,11 +13,13 @@ import Test.QuickCheck.Poly  (A, B)
 import Test.Tasty            (TestTree, defaultMain, testGroup)
 import Test.Tasty.QuickCheck (testProperty)
 
+#if MIN_VERSION_base(4,16,0)
 #if MIN_VERSION_OneTuple(0,4,0)
 import Data.Tuple.Solo     (Solo (MkSolo))
 #else
 import Data.Tuple.Solo     (Solo (Solo))
 #define MkSolo Solo
+#endif
 #endif
 
 import qualified Data.HashMap.Lazy as HM
@@ -50,7 +52,9 @@ main = defaultMain $ testGroup "tests"
     , battery $ mkT (HM.keys :: forall a. HM.HashMap I a -> [I])
     , battery $ mkT (zipWith const [0 ..] . toList :: forall a. Seq.Seq a -> [Int])
     , battery $ mkT $ zipWith const [0 ..] . V.toList
+#if MIN_VERSION_base(4,16,0)
     , battery $ mkT $ \(MkSolo _) -> [()]
+#endif
 #if MIN_VERSION_containers(0,6,3)
     , battery $ mkT IntMap.keys
 #endif

@@ -8,9 +8,9 @@
 #
 # For more information, see https://github.com/haskell-CI/haskell-ci
 #
-# version: 0.19.20260209
+# version: 0.19.20260331
 #
-# REGENDATA ("0.19.20260209",["--config=cabal.haskell-ci","github","cabal.project"])
+# REGENDATA ("0.19.20260331",["--config=cabal.haskell-ci","github","cabal.project"])
 #
 name: Haskell-CI
 on:
@@ -37,9 +37,14 @@ jobs:
     strategy:
       matrix:
         include:
-          - compiler: ghc-9.12.1
+          - compiler: ghc-9.14.1
             compilerKind: ghc
-            compilerVersion: 9.12.1
+            compilerVersion: 9.14.1
+            setup-method: ghcup
+            allow-failure: false
+          - compiler: ghc-9.12.4
+            compilerKind: ghc
+            compilerVersion: 9.12.4
             setup-method: ghcup
             allow-failure: false
           - compiler: ghc-9.10.1
@@ -228,6 +233,7 @@ jobs:
           if [ $((HCNUMVER >= 90000 && HCNUMVER < 91200)) -ne 0 ] ; then echo "package indexed-traversable-benchmarks" >> cabal.project ; fi
           if [ $((HCNUMVER >= 90000 && HCNUMVER < 91200)) -ne 0 ] ; then echo "    ghc-options: -Werror=incomplete-patterns -Werror=incomplete-uni-patterns" >> cabal.project ; fi
           cat >> cabal.project <<EOF
+          allow-newer: these-1.2.1:base
           EOF
           $HCPKG list --simple-output --names-only | perl -ne 'for (split /\s+/) { print "constraints: any.$_ installed\n" unless /^(indexed-traversable|indexed-traversable-benchmarks|indexed-traversable-instances)$/; }' >> cabal.project.local
           cat cabal.project
