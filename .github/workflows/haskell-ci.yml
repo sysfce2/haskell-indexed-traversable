@@ -233,7 +233,6 @@ jobs:
           if [ $((HCNUMVER >= 90000 && HCNUMVER < 91200)) -ne 0 ] ; then echo "package indexed-traversable-benchmarks" >> cabal.project ; fi
           if [ $((HCNUMVER >= 90000 && HCNUMVER < 91200)) -ne 0 ] ; then echo "    ghc-options: -Werror=incomplete-patterns -Werror=incomplete-uni-patterns" >> cabal.project ; fi
           cat >> cabal.project <<EOF
-          allow-newer: these-1.2.1:base
           EOF
           $HCPKG list --simple-output --names-only | perl -ne 'for (split /\s+/) { print "constraints: any.$_ installed\n" unless /^(indexed-traversable|indexed-traversable-benchmarks|indexed-traversable-instances)$/; }' >> cabal.project.local
           cat cabal.project

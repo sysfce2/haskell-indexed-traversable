@@ -12,5 +12,3 @@ package indexed-traversable-instances
 
 package indexed-traversable-benchmarks
   ghc-options: -Wall
-
-allow-newer: these-1.2.1:base
